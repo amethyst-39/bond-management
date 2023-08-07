@@ -1,17 +1,17 @@
 -- Insert dummy data into the User table
-INSERT INTO User (Id, Name, Email, Role)
+INSERT INTO Users (Id, Name, Email, Role)
 VALUES (1, 'John Doe', 'john@example.com', 'User'),
    (2, 'Jane Smith', 'jane@example.com', 'Admin');
 -- Insert dummy data into the Book table
-INSERT INTO Book (Id, BookName)
+INSERT INTO Book (Id, Book_Name)
 VALUES (1, 'Book A'),
    (2, 'Book B'),
    (3, 'Book C');
 -- Insert dummy data into the BookUser table (assigning books to users)
-INSERT INTO BookUser (BookId, UserId)
-VALUES (1, 1),
-   (2, 1),
-   (2, 2);
+INSERT INTO Book_User (id, Book_Id, User_Id)
+VALUES (1,1, 1),
+   (2,2, 1),
+   (3,2, 2);
 -- Insert dummy data into the Counterparty table
 INSERT INTO Counterparty (Id, Name)
 VALUES (1, 'Counterparty A'),
@@ -22,10 +22,10 @@ INSERT INTO Security (
       ISIN,
       CUSIP,
       Issuer,
-      MaturityDate,
+      Maturity_Date,
       Coupon,
       Type,
-      FaceValue,
+      Face_Value,
       Status
    )
 VALUES (
@@ -53,15 +53,15 @@ VALUES (
 -- Insert dummy data into the Trade table
 INSERT INTO Trade (
       Id,
-      BookId,
-      CounterpartyId,
-      SecurityId,
+      Book_Id,
+      Counterparty_Id,
+      Security_Id,
       Quantity,
       Status,
       Price,
       Buy_Sell,
-      TradeDate,
-      SettlementDate
+      Trade_Date,
+      Settlement_Date
    )
 VALUES (
       1,

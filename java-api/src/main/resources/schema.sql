@@ -1,17 +1,19 @@
-DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS Users;
 -- Create the User table
-CREATE TABLE User (
+CREATE TABLE Users (
     Id INT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
     Role VARCHAR(50)
 );
+
 DROP TABLE IF EXISTS Book;
 -- Create the Book table
 CREATE TABLE Book (
     Id INT PRIMARY KEY,
     BookName VARCHAR(255) NOT NULL
 );
+
 DROP TABLE IF EXISTS BookUser;
 -- Create the BookUser table (Many-to-Many relationship between Book and User)
 CREATE TABLE BookUser (
@@ -19,14 +21,16 @@ CREATE TABLE BookUser (
     UserId INT NOT NULL,
     PRIMARY KEY (BookId, UserId),
     FOREIGN KEY (BookId) REFERENCES Book(Id),
-    FOREIGN KEY (UserId) REFERENCES User(Id)
+    FOREIGN KEY (UserId) REFERENCES Users(Id)
 );
+
 DROP TABLE IF EXISTS Counterparty;
 -- Create the Counterparty table
 CREATE TABLE Counterparty (
     Id INT PRIMARY KEY,
     Name VARCHAR(255) NOT NULL
 );
+
 DROP TABLE IF EXISTS Security;
 -- Create the Security table
 CREATE TABLE Security (
@@ -40,6 +44,7 @@ CREATE TABLE Security (
     FaceValue FLOAT,
     Status VARCHAR(50)
 );
+
 DROP TABLE IF EXISTS Trade;
 -- Create the Trade table
 CREATE TABLE Trade (

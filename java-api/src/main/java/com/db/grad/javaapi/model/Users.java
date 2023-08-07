@@ -7,8 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "User")
-public class User {
+@Table(name = "Users")
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +25,11 @@ public class User {
 
     // Constructors, getters, and setters
 
-    public User() {
+    public Users() {
         // Default constructor required by JPA
     }
 
-    public User(String name, String email, String role) {
+    public Users(String name, String email, String role) {
         this.name = name;
         this.email = email;
         this.role = role;

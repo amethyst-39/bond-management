@@ -4,8 +4,6 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
-import com.db.grad.javaapi.model.Book;
-import com.db.grad.javaapi.model.User;
 
 
 @Entity
@@ -21,7 +19,7 @@ public class BookUser {
 
     @ManyToOne
     @JoinColumn(name = "UserId", referencedColumnName = "Id", nullable = false)
-    private User user;
+    private Users users;
 
     // Constructors, getters, and setters
 
@@ -29,9 +27,9 @@ public class BookUser {
         // Default constructor required by JPA
     }
 
-    public BookUser(Book book, User user) {
+    public BookUser(Book book, Users users) {
         this.book = book;
-        this.user = user;
+        this.users = users;
     }
 
     // Getters and setters for all fields
@@ -52,11 +50,11 @@ public class BookUser {
         this.book = book;
     }
 
-    public User getUser() {
-        return user;
+    public Users getUser() {
+        return users;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(Users users) {
+        this.users = users;
     }
 }
