@@ -12,16 +12,16 @@ public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
 
     @Column(nullable = false, length = 255)
-    private String user_name;
+    private String name;
 
     @Column(nullable = false, length = 255)
-    private String Email;
+    private String email;
 
     @Column(length = 50)
-    private String user_role;
+    private String role;
 
     // Constructors, getters, and setters
 
@@ -30,42 +30,42 @@ public class Users {
     }
 
     public Users(String name, String email, String role) {
-        this.user_name = name;
-        this.Email = email;
-        this.user_role = role;
+        this.name = name;
+        this.email = email;
+        this.role = role;
     }
 
     // Getters and setters for all fields
 
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public String getName() {
-        return user_name;
+        return name;
     }
 
     public void setName(String name) {
-        this.user_name = name;
+        this.name = name;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        this.Email = email;
+        this.email = email;
     }
 
     public String getRole() {
-        return user_role;
+        return role;
     }
 
     public void setRole(String role) {
-        this.user_role = role;
+        this.role = role;
     }
 }
