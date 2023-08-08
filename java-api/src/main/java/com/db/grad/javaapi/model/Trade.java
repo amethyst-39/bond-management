@@ -5,14 +5,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
 import javax.persistence.Column;
 import java.time.LocalDate;
-import com.db.grad.javaapi.model.Book;
-import javax.persistence.CascadeType;
 
 @Entity
 public class Trade {
 
     @Id
-    private int id;
+    private long id;
 
     @ManyToOne
     @JoinColumn(name = "BookId",nullable = false)
@@ -64,7 +62,7 @@ public class Trade {
 
     // Getters and setters for all fields
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

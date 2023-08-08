@@ -1,4 +1,5 @@
 package com.db.grad.javaapi.model;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,7 +15,7 @@ public class Security {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @Column(nullable = false, length = 50)
     private String isin;
@@ -60,7 +61,7 @@ public class Security {
 
     // Getters and setters for all fields
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
