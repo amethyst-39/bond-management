@@ -2,9 +2,13 @@
 import React, { useState , useEffect } from 'react';
 import './DashBoard.css';
 import axios from 'axios';
+import { Link, useNavigate} from 'react-router-dom';
+
 var sampleBonds = [];
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+
     const [selectedOption, setSelectedOption] = useState('All Maturities');
     const [bondList, setBondList] = useState(sampleBonds);
     const [searchText, setSearchText] = useState('');
@@ -14,6 +18,9 @@ const Dashboard = () => {
     const [maturityDateFrom, setMaturityDateFrom] = useState('');
     const [maturityDateTo, setMaturityDateTo] = useState('');
     const [selectedHeading, setSelectedHeading] = useState('All Maturities');
+
+    const [bondDetails, setBondDetails] = useState(null);
+
 
     useEffect(() => {
         fetchBonds(); // Fetch bonds when the component mounts
@@ -28,6 +35,22 @@ const Dashboard = () => {
             console.error('Error fetching bonds:', error);
         }
     };
+
+    const fetchTrades = async (id) => {
+        axios.get(`http://localhost:8080/allTradesForSecurity/${id}`)
+            .then(response => {
+                setBondDetails(response.data);
+                console.log("DashBoard.js")
+                console.log(response.data)
+                navigate("/bond", { state: response.data })
+                
+            })
+            .catch(error => {
+                console.error('Error fetching bond details:', error);
+                // Handle the error, e.g., set an error state
+            });
+    }
+
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
@@ -209,7 +232,7 @@ const Dashboard = () => {
                                         : ''
                                 }
                             >
-                                <td>{bond.isin}</td>
+                                <td className="isin-cell" onClick={() => fetchTrades(bond.id)}>{bond.isin}</td>
                                 <td>{bond.issuer}</td>
                                 <td>{bond.maturityDate}</td>
                                 <td>{bond.faceValue}</td>
