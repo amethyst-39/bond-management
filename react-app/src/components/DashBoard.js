@@ -1,25 +1,23 @@
-import React, { useState, useEffect } from "react";
-import "./DashBoard.css";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+
+import React, { useState , useEffect } from 'react';
+import './DashBoard.css';
+import axios from 'axios';
+import { Link, useNavigate} from 'react-router-dom';
 
 var sampleBonds = [];
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [selectedOption, setSelectedOption] = useState("All Maturities");
+
+    const [selectedOption, setSelectedOption] = useState('All Maturities');
     const [bondList, setBondList] = useState(sampleBonds);
-    const [searchText, setSearchText] = useState("");
-    const [searchField, setSearchField] = useState("issuer"); // Default search field
-    const [sortField, setSortField] = useState("maturityDate"); // Default sort field
-    const [sortOrder, setSortOrder] = useState("asc"); // Default sort order
-    const [maturityDateFrom, setMaturityDateFrom] = useState("");
-    const [maturityDateTo, setMaturityDateTo] = useState("");
-    const [selectedHeading, setSelectedHeading] = useState("All Maturities");
-
-    const [bondDetails, setBondDetails] = useState(null);
-
-   
+    const [searchText, setSearchText] = useState('');
+    const [searchField, setSearchField] = useState('issuer'); // Default search field
+    const [sortField, setSortField] = useState('maturityDate'); // Default sort field
+    const [sortOrder, setSortOrder] = useState('asc'); // Default sort order
+    const [maturityDateFrom, setMaturityDateFrom] = useState('');
+    const [maturityDateTo, setMaturityDateTo] = useState('');
+    const [selectedHeading, setSelectedHeading] = useState('All Maturities');
 
     const [bondDetails, setBondDetails] = useState(null);
 
@@ -30,21 +28,17 @@ const Dashboard = () => {
 
     const fetchBonds = async () => {
         try {
-            const response = await axios.get(
-                "http://localhost:8080/getAllSecurities"
-            );
+            const response = await axios.get('http://localhost:8080/getAllSecurities');
             sampleBonds = response.data;
-
+            
             // Apply default sorting by Maturity Date in ascending order
-            const sortedBonds = [...response.data].sort(
-                (a, b) => new Date(a.maturityDate) - new Date(b.maturityDate)
-            );
+            const sortedBonds = [...response.data].sort((a, b) => new Date(a.maturityDate) - new Date(b.maturityDate));
             setBondList(sortedBonds);
 
-            setSelectedOption("All Maturities"); // Set default option
-            setSelectedHeading("All Maturities"); // Set default headingta
+            setSelectedOption('All Maturities'); // Set default option
+            setSelectedHeading('All Maturities'); // Set default headingta
         } catch (error) {
-            console.error("Error fetching bonds:", error);
+            console.error('Error fetching bonds:', error);
         }
     };
 
@@ -63,25 +57,20 @@ const Dashboard = () => {
             });
     }
 
+
     const handleOptionClick = (option) => {
         setSelectedOption(option);
 
-        if (option === "Upcoming Maturities") {
-            const upcomingBonds = sampleBonds.filter(
-                (bond) => new Date(bond.maturityDate) > new Date()
-            );
+        if (option === 'Upcoming Maturities') {
+            const upcomingBonds = sampleBonds.filter(bond => new Date(bond.maturityDate) > new Date());
             setBondList(upcomingBonds);
-        } else if (option === "Recent Maturities") {
-            const recentBonds = sampleBonds.filter(
-                (bond) => new Date(bond.maturityDate) <= new Date()
-            );
+        } else if (option === 'Recent Maturities') {
+            const recentBonds = sampleBonds.filter(bond => new Date(bond.maturityDate) <= new Date());
             setBondList(recentBonds);
-        } else if (option === "All Maturities") {
+        } else if (option === 'All Maturities') {
             setBondList(sampleBonds);
-        } else if (option === "Pending Maturities") {
-            const pendingBonds = sampleBonds.filter(
-                (bond) => bond.status === "Unpaid"
-            );
+        } else if (option === 'Pending Maturities') {
+            const pendingBonds = sampleBonds.filter(bond => bond.status === 'Unpaid');
             setBondList(pendingBonds);
         }
 
@@ -99,21 +88,17 @@ const Dashboard = () => {
     const handleSearch = () => {
         let filteredBonds = [];
 
-        if (selectedOption === "Upcoming Maturities") {
-            filteredBonds = bondList.filter(
-                (bond) => new Date(bond.maturityDate) > new Date()
-            );
-        } else if (selectedOption === "Recent Maturities") {
-            filteredBonds = bondList.filter(
-                (bond) => new Date(bond.maturityDate) <= new Date()
-            );
-        } else if (selectedOption === "All Maturities") {
+        if (selectedOption === 'Upcoming Maturities') {
+            filteredBonds = bondList.filter(bond => new Date(bond.maturityDate) > new Date());
+        } else if (selectedOption === 'Recent Maturities') {
+            filteredBonds = bondList.filter(bond => new Date(bond.maturityDate) <= new Date());
+        } else if (selectedOption === 'All Maturities') {
             filteredBonds = bondList;
-        } else if (selectedOption === "Pending Maturities") {
-            filteredBonds = bondList.filter((bond) => bond.status === "Unpaid");
+        } else if (selectedOption === 'Pending Maturities') {
+            filteredBonds = bondList.filter(bond => bond.status === 'Unpaid');
         }
 
-        filteredBonds = filteredBonds.filter((bond) => {
+        filteredBonds = filteredBonds.filter(bond => {
             const fieldValue = bond[searchField].toString().toLowerCase();
             return fieldValue.includes(searchText.toLowerCase());
         });
@@ -145,12 +130,9 @@ const Dashboard = () => {
 
     const filterByMaturityDateRange = (fromDate, toDate) => {
         if (fromDate && toDate) {
-            const filteredBonds = sampleBonds.filter((bond) => {
+            const filteredBonds = sampleBonds.filter(bond => {
                 const maturityDate = new Date(bond.maturityDate);
-                return (
-                    maturityDate >= new Date(fromDate) &&
-                    maturityDate <= new Date(toDate)
-                );
+                return maturityDate >= new Date(fromDate) && maturityDate <= new Date(toDate);
             });
             setBondList(filteredBonds);
         }
@@ -161,27 +143,18 @@ const Dashboard = () => {
             const valueA = a[field];
             const valueB = b[field];
 
-            if (field === "maturityDate") {
-                return (
-                    (order === "asc" ? 1 : -1) *
-                    (new Date(valueA) - new Date(valueB))
-                );
-            } else if (field === "issueSize") {
-                const sizeA = parseFloat(valueA.slice(1).replace(",", ""));
-                const sizeB = parseFloat(valueB.slice(1).replace(",", ""));
-                return (order === "asc" ? 1 : -1) * (sizeA - sizeB);
+            if (field === 'maturityDate') {
+                return (order === 'asc' ? 1 : -1) * (new Date(valueA) - new Date(valueB));
+            } else if (field === 'issueSize') {
+                const sizeA = parseFloat(valueA.slice(1).replace(',', ''));
+                const sizeB = parseFloat(valueB.slice(1).replace(',', ''));
+                return (order === 'asc' ? 1 : -1) * (sizeA - sizeB);
             } else {
-                return (
-                    (order === "asc" ? 1 : -1) * valueA.localeCompare(valueB)
-                );
+                return (order === 'asc' ? 1 : -1) * (valueA.localeCompare(valueB));
             }
         });
 
         setBondList(sortedBonds);
-    };
-
-    const handleDeleteSecurityClick = () => {
-        navigate('/delete-security'); // Redirect to DeleteSecurity component
     };
 
     return (
@@ -195,10 +168,7 @@ const Dashboard = () => {
                         value={searchText}
                         onChange={handleSearchChange}
                     />
-                    <select
-                        value={searchField}
-                        onChange={handleSearchFieldChange}
-                    >
+                    <select value={searchField} onChange={handleSearchFieldChange}>
                         <option value="id">ID</option>
                         <option value="issuer">Issuer</option>
                         <option value="maturityDate">Maturity Date</option>
@@ -239,31 +209,12 @@ const Dashboard = () => {
             </div>
             <div className="content">
                 <div className="options">
-                    <button onClick={() => handleOptionClick("All Maturities")}>
-                        All Maturities
-                    </button>
-                    <button
-                        onClick={() => handleOptionClick("Pending Maturities")}
-                    >
-                        Pending Maturities
-                    </button>
-                    <button
-                        onClick={() => handleOptionClick("Upcoming Maturities")}
-                    >
-                        Upcoming Maturities
-                    </button>
-                    <button
-                        onClick={() => handleOptionClick("Recent Maturities")}
-                    >
-                        Recent Maturities
-                    </button>
-                    <div>
-                    <button className="delete-security-button" style={{ backgroundColor: 'green', color: 'white', marginLeft: 0 }} onClick={handleDeleteSecurityClick}>
-                    Security Operations
-                    </button>
+                    <button onClick={() => handleOptionClick('All Maturities')}>All Maturities</button>
+                    <button onClick={() => handleOptionClick('Pending Maturities')}>Pending Maturities</button>
+                    <button onClick={() => handleOptionClick('Upcoming Maturities')}>Upcoming Maturities</button>
+                    <button onClick={() => handleOptionClick('Recent Maturities')}>Recent Maturities</button>
+
                 </div>
-                </div>
-                
                 <div className="selected-heading">
                     <h2>{selectedHeading}</h2>
                 </div>
@@ -278,17 +229,15 @@ const Dashboard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {bondList.map((bond) => (
+                        {bondList.map(bond => (
                             <tr
                                 key={bond.id}
                                 className={
-                                    new Date(bond.maturityDate) <= new Date() &&
-                                    bond.status === "Unpaid"
-                                        ? "red-row"
-                                        : ""
+                                    (new Date(bond.maturityDate) <= new Date() && bond.status === 'Unpaid')
+                                        ? 'red-row'
+                                        : ''
                                 }
                             >
-
                                 <td className="isin-cell" onClick={() => fetchTrades(bond.id)}>{bond.isin}</td>
                                 <td>{bond.issuer}</td>
                                 <td>{bond.maturityDate}</td>
@@ -304,3 +253,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
