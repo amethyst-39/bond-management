@@ -30,7 +30,13 @@ const Dashboard = () => {
         try {
             const response = await axios.get('http://localhost:8080/getAllSecurities');
             sampleBonds = response.data;
-            setBondList(response.data); // Populate bondList with fetched data
+            
+            // Apply default sorting by Maturity Date in ascending order
+            const sortedBonds = [...response.data].sort((a, b) => new Date(a.maturityDate) - new Date(b.maturityDate));
+            setBondList(sortedBonds);
+
+            setSelectedOption('All Maturities'); // Set default option
+            setSelectedHeading('All Maturities'); // Set default headingta
         } catch (error) {
             console.error('Error fetching bonds:', error);
         }
