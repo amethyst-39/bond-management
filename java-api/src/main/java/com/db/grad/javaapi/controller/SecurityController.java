@@ -46,6 +46,7 @@ public class SecurityController {
         try {
             return new ResponseEntity<>(securityService.createNewSecurity(security), HttpStatus.OK);
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
